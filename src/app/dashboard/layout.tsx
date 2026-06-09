@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import Link from 'next/link';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { Activity, LogOut } from 'lucide-react';
@@ -9,11 +10,36 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     <div className="min-h-screen flex flex-col bg-muted/20">
       <header className="sticky top-0 z-10 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Activity className="h-4 w-4" />
-            </div>
-            <span className="font-semibold text-foreground tracking-tight">IMS Portal</span>
+          <div className="flex items-center gap-6">
+            <Link href="/dashboard" className="flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <Activity className="h-4 w-4" />
+              </div>
+              <span className="font-semibold text-foreground tracking-tight hidden sm:inline-block">
+                IMS Portal
+              </span>
+            </Link>
+
+            <nav className="flex items-center gap-4 text-sm font-medium">
+              <Link
+                href="/dashboard"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Overview
+              </Link>
+              <Link
+                href="/dashboard/part-masters"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Catalog
+              </Link>
+              <Link
+                href="/dashboard/inventory"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Inventory
+              </Link>
+            </nav>
           </div>
 
           <div className="flex items-center gap-4">

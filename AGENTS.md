@@ -12,11 +12,20 @@ This file serves as the strict operating manual for all AI agents working on the
 
 ## 1. Architectural Philosophy
 
-- **Strict Separation of Concerns**: Keep business logic completely decoupled from UI components.
-- **Core Library**: All business logic (Entities, Services, Providers) MUST live in `src/core/`. The Next.js application (`src/app/`) acts purely as a consumer of this logic.
+- **Strict Separation of Concerns (Plug & Play)**: Each layer (UI, API, Data, Core Logic) must be completely decoupled and pluggable. If the UI framework changes tomorrow, the business logic must remain untouched.
+- **Core Library (`src/core/`)**: All business logic (Entities, Services, Repositories, Providers) MUST live here. This code must be written as a UI-agnostic, standalone TypeScript library. It must have absolutely zero knowledge of React, Next.js, or DOM APIs.
 - **Data Layer Isolation**: Server actions should be thin wrappers that call `src/core/` services. Do NOT embed database queries or complex domain logic directly inside UI components or Next.js API routes.
 
-## 2. Styling & CSS Guidelines
+## 2. Code Quality, Scale & Constraints
+
+- **150 Lines of Code Limit**: Strictly NO code file should exceed 150 lines of code. If a file approaches this limit, it must be aggressively refactored, split into smaller modules, or abstracted.
+- **Super Testable & Scalable**: Write pure functions. Dependency injection should be used where applicable. Code must be structured to easily accommodate unit and integration testing.
+- **TypeScript Strictness**: Avoid `any`. Always define explicit interfaces and types for payloads, API responses, and function parameters.
+- **Super DRY & Zero Redundancy**: Absolutely zero code duplication. Extract shared logic into utility functions or base classes.
+- **Component Design**: Build small, reusable, pure functions and React components. Favor composition over inheritance.
+- **Linting**: Run `npm run lint` and `npm run test:e2e` to verify no regressions are introduced.
+
+## 3. Styling & CSS Guidelines
 
 - **SCSS over CSS**: We strictly use SCSS for custom styling. All global styling files must be `.scss`.
 - **Zero Duplicity (DRY)**: Repeated UI patterns must be abstracted.
@@ -25,12 +34,6 @@ This file serves as the strict operating manual for all AI agents working on the
   - Use Tailwind's `@apply` directive inside SCSS for extracting repeated utility class combinations into logical classes when component abstraction is overkill.
 - **Modularity**: Avoid massive global stylesheets. Component-specific SCSS should be scoped or imported cleanly.
 - **Tailwind v4 Integration**: Maintain compatibility with Tailwind v4 by keeping base directives intact but enhancing them with SCSS capabilities.
-
-## 3. Code Quality & Standards
-
-- **TypeScript Strictness**: Avoid `any`. Always define explicit interfaces and types for payloads, API responses, and function parameters.
-- **Component Design**: Build small, reusable, pure functions and React components. Favor composition over inheritance.
-- **Linting**: Run `npm run lint` and `npm run test:e2e` to verify no regressions are introduced.
 
 ## 4. UI/UX Principles (Apple-like Minimalism)
 
