@@ -1,0 +1,14 @@
+// _variables.scss
+// Base global variables for the application
+
+// Layout and Spacing
+$spacing-unit: 4px;
+$max-width-main: 1200px;
+$border-radius-base: 0.625rem;
+
+// Typography (Fallback variables, though we mostly rely on Tailwind classes and Geist)
+$font-family-sans: var(--font-geist-sans), sans-serif;
+$font-family-mono: var(--font-geist-mono), monospace;
+
+// Add any specialized design tokens here that Tailwind cannot easily handle.
+// OKLCH variables remain defined in globals.scss :root for Tailwind v4 compatibility.
