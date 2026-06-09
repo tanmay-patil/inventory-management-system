@@ -7,7 +7,6 @@ import { DataTable } from '@/components/ui/data-table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Plus } from 'lucide-react';
 import { addPartMaster } from '@/app/actions/partMasterActions';
 
 interface PartMastersClientProps {
@@ -40,7 +39,7 @@ export function PartMastersClient({ initialData }: PartMastersClientProps) {
             'Cancel'
           ) : (
             <>
-              <Plus className="mr-2 h-4 w-4" /> Add Part
+              <i className="fi fi-rr-plus mr-2 translate-y-px"></i> Add Part
             </>
           )}
         </Button>

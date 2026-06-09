@@ -2,8 +2,8 @@ import { ReactNode } from 'react';
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
-import { Activity, LogOut } from 'lucide-react';
 import { logoutAction } from './actions';
+import { MobileNav } from './mobile-nav';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
@@ -12,49 +12,51 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-6">
             <Link href="/dashboard" className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <Activity className="h-4 w-4" />
+              <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <i className="fi fi-rr-chart-line-up absolute inset-0 flex items-center justify-center text-[1.15rem] translate-y-[2px]"></i>
               </div>
               <span className="font-semibold text-foreground tracking-tight hidden sm:inline-block">
                 IMS Portal
               </span>
             </Link>
 
-            <nav className="flex items-center gap-4 text-sm font-medium">
+            <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
               <Link
                 href="/dashboard"
-                className="text-muted-foreground transition-colors hover:text-foreground"
+                className="text-muted-foreground transition-colors hover:text-foreground flex items-center gap-2"
               >
-                Overview
+                <i className="fi fi-rr-apps text-base translate-y-px"></i> Overview
               </Link>
               <Link
                 href="/dashboard/part-masters"
-                className="text-muted-foreground transition-colors hover:text-foreground"
+                className="text-muted-foreground transition-colors hover:text-foreground flex items-center gap-2"
               >
-                Catalog
+                <i className="fi fi-rr-box-open text-base translate-y-px"></i> Catalog
               </Link>
               <Link
                 href="/dashboard/inventory"
-                className="text-muted-foreground transition-colors hover:text-foreground"
+                className="text-muted-foreground transition-colors hover:text-foreground flex items-center gap-2"
               >
-                Inventory
+                <i className="fi fi-rr-boxes text-base translate-y-px"></i> Inventory
               </Link>
             </nav>
           </div>
 
           <div className="flex items-center gap-4">
-            <ThemeToggle />
-            <form action={logoutAction}>
-              <Button
-                variant="ghost"
-                size="sm"
-                type="submit"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                <LogOut className="h-4 w-4 mr-2" />
-                Logout
-              </Button>
-            </form>
+            <div className="hidden md:flex items-center gap-4">
+              <ThemeToggle />
+              <form action={logoutAction}>
+                <Button
+                  variant="ghost"
+                  type="submit"
+                  className="text-muted-foreground hover:text-foreground gap-2"
+                >
+                  <i className="fi fi-rr-sign-out-alt text-[1.15rem] translate-y-px"></i>
+                  Logout
+                </Button>
+              </form>
+            </div>
+            <MobileNav />
           </div>
         </div>
       </header>

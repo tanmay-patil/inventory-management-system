@@ -1,25 +1,27 @@
 'use client';
 
-import { ColumnDef, Row } from '@tanstack/react-table';
-import { PartMaster } from '@/core/entities/PartMaster';
-
 import { useState, useTransition } from 'react';
-import { deletePartMaster, updatePartMaster } from '@/app/actions/partMasterActions';
+import { Row } from '@tanstack/react-table';
+import { InventoryItem, ItemStatus } from '@/core/entities/InventoryItem';
+import { deleteInventoryItem, updateInventoryItem } from '@/app/actions/inventoryActions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-
 import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 
-const ActionCell = ({ row }: { row: Row<PartMaster> }) => {
+export const ActionCell = ({ row }: { row: Row<InventoryItem> }) => {
   const [isPending, startTransition] = useTransition();
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [editForm, setEditForm] = useState(row.original);
+  const [editForm, setEditForm] = useState({
+    serialNumber: row.original.serialNumber || '',
+    status: row.original.status,
+    locationId: row.original.locationId || '',
+  });
 
   const handleSave = () => {
     startTransition(() => {
-      updatePartMaster(row.original.id, editForm);
+      updateInventoryItem(row.original.id, editForm);
       setIsEditing(false);
     });
   };
@@ -31,7 +33,7 @@ const ActionCell = ({ row }: { row: Row<PartMaster> }) => {
           onClick={() => setIsEditing(true)}
           disabled={isPending}
           className="text-blue-500 hover:text-blue-700 disabled:opacity-50 transition-colors p-2 cursor-pointer"
-          title="Edit Part Master"
+          title="Edit Item"
         >
           <i className="fi fi-rr-pencil text-lg"></i>
         </button>
@@ -39,7 +41,7 @@ const ActionCell = ({ row }: { row: Row<PartMaster> }) => {
           onClick={() => setIsDeleting(true)}
           disabled={isPending}
           className="text-red-500 hover:text-red-700 disabled:opacity-50 transition-colors p-2 cursor-pointer"
-          title="Delete Part Master"
+          title="Delete Item"
         >
           <i className="fi fi-rr-trash text-lg"></i>
         </button>
@@ -47,13 +49,13 @@ const ActionCell = ({ row }: { row: Row<PartMaster> }) => {
 
       <ConfirmDialog
         isOpen={isDeleting}
-        title="Delete Part Master"
-        description="Are you sure you want to delete this part master? This might affect linked inventory and cannot be undone."
+        title="Delete Inventory Item"
+        description="Are you sure you want to delete this item? This action cannot be undone."
         confirmText="Delete"
         onCancel={() => setIsDeleting(false)}
         onConfirm={() => {
           startTransition(() => {
-            deletePartMaster(row.original.id);
+            deleteInventoryItem(row.original.id);
             setIsDeleting(false);
           });
         }}
@@ -70,30 +72,43 @@ const ActionCell = ({ row }: { row: Row<PartMaster> }) => {
             >
               <i className="fi fi-rr-cross"></i>
             </button>
-            <h3 className="text-lg font-semibold mb-6">Edit Part Master</h3>
-            <div className="flex flex-col gap-4">
+            <h3 className="text-lg font-semibold mb-6 text-left">Edit Inventory Item</h3>
+            <div className="flex flex-col gap-4 text-left">
               <div className="space-y-2">
-                <Label htmlFor="partNumber">Part Number</Label>
+                <Label htmlFor="serialNumber">Serial Number</Label>
                 <Input
-                  id="partNumber"
-                  value={editForm.partNumber}
-                  onChange={(e) => setEditForm({ ...editForm, partNumber: e.target.value })}
+                  id="serialNumber"
+                  value={editForm.serialNumber}
+                  onChange={(e) => setEditForm({ ...editForm, serialNumber: e.target.value })}
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="name">Part Name</Label>
-                <Input
-                  id="name"
-                  value={editForm.name}
-                  onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                />
+              <div className="space-y-2 flex flex-col">
+                <Label htmlFor="status">Status</Label>
+                <div className="relative">
+                  <select
+                    id="status"
+                    value={editForm.status}
+                    onChange={(e) =>
+                      setEditForm({ ...editForm, status: e.target.value as ItemStatus })
+                    }
+                    className="appearance-none flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 pr-8 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  >
+                    <option value={ItemStatus.IN_STOCK}>In Stock</option>
+                    <option value={ItemStatus.IN_USE}>In Use</option>
+                    <option value={ItemStatus.DEFECTIVE}>Defective</option>
+                    <option value={ItemStatus.IN_REPAIR}>In Repair</option>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-muted-foreground">
+                    <i className="fi fi-rr-angle-small-down mt-1"></i>
+                  </div>
+                </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="locationId">Location</Label>
                 <Input
-                  id="description"
-                  value={editForm.description || ''}
-                  onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
+                  id="locationId"
+                  value={editForm.locationId}
+                  onChange={(e) => setEditForm({ ...editForm, locationId: e.target.value })}
                 />
               </div>
               <div className="flex justify-end gap-2 mt-4">
@@ -111,29 +126,3 @@ const ActionCell = ({ row }: { row: Row<PartMaster> }) => {
     </>
   );
 };
-
-export const columns: ColumnDef<PartMaster>[] = [
-  {
-    accessorKey: 'partNumber',
-    header: 'Part Number',
-    cell: ({ row }) => <div className="font-medium">{row.getValue('partNumber')}</div>,
-  },
-  {
-    accessorKey: 'name',
-    header: 'Part Name',
-  },
-  {
-    accessorKey: 'description',
-    header: 'Description',
-    cell: ({ row }) => {
-      const description = row.getValue('description') as string;
-      return (
-        <div className="text-muted-foreground truncate max-w-[200px]">{description || '-'}</div>
-      );
-    },
-  },
-  {
-    id: 'actions',
-    cell: ({ row }) => <ActionCell row={row} />,
-  },
-];

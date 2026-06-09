@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import '@/styles/globals.scss';
+import '@flaticon/flaticon-uicons/css/all/all.css';
 import { ThemeProvider } from '@/components/theme-provider';
 
 const geistSans = Geist({

@@ -24,6 +24,7 @@ This file serves as the strict operating manual for all AI agents working on the
 - **Super DRY & Zero Redundancy**: Absolutely zero code duplication. Extract shared logic into utility functions or base classes.
 - **Component Design**: Build small, reusable, pure functions and React components. Favor composition over inheritance.
 - **Linting**: Run `npm run lint` and `npm run test:e2e` to verify no regressions are introduced.
+- **No Dead Code**: Absolutely no dead code to be left behind. Review all files and strictly remove unused imports, variables, functions, and commented-out blocks.
 
 ## 3. Styling & CSS Guidelines
 

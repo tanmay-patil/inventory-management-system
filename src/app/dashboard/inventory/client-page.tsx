@@ -1,14 +1,13 @@
 'use client';
 
 import { useActionState, useState } from 'react';
-import { InventoryItem } from '@/core/entities/InventoryItem';
+import { InventoryItem, ItemStatus } from '@/core/entities/InventoryItem';
 import { PartMaster } from '@/core/entities/PartMaster';
 import { columns } from './columns';
 import { DataTable } from '@/components/ui/data-table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Plus } from 'lucide-react';
 import { addInventoryItem } from '@/app/actions/inventoryActions';
 
 interface InventoryClientProps {
@@ -33,6 +32,14 @@ export function InventoryClient({ initialData, partMasters }: InventoryClientPro
     null
   );
 
+  const enrichedData = initialData.map((item) => {
+    const part = partMasters.find((p) => p.id === item.partMasterId);
+    return {
+      ...item,
+      partName: part ? `${part.name} (${part.partNumber})` : 'Unknown Part',
+    };
+  });
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex justify-between items-center">
@@ -42,7 +49,7 @@ export function InventoryClient({ initialData, partMasters }: InventoryClientPro
             'Cancel'
           ) : (
             <>
-              <Plus className="mr-2 h-4 w-4" /> Receive Stock
+              <i className="fi fi-rr-plus mr-2 translate-y-px"></i> Receive Stock
             </>
           )}
         </Button>
@@ -79,13 +86,13 @@ export function InventoryClient({ initialData, partMasters }: InventoryClientPro
                   id="status"
                   name="status"
                   required
-                  defaultValue="IN_STOCK"
+                  defaultValue={ItemStatus.IN_STOCK}
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                 >
-                  <option value="IN_STOCK">In Stock</option>
-                  <option value="IN_USE">In Use</option>
-                  <option value="DEFECTIVE">Defective</option>
-                  <option value="IN_REPAIR">In Repair</option>
+                  <option value={ItemStatus.IN_STOCK}>In Stock</option>
+                  <option value={ItemStatus.IN_USE}>In Use</option>
+                  <option value={ItemStatus.DEFECTIVE}>Defective</option>
+                  <option value={ItemStatus.IN_REPAIR}>In Repair</option>
                 </select>
               </div>
               <div className="flex flex-col gap-2">
@@ -103,7 +110,7 @@ export function InventoryClient({ initialData, partMasters }: InventoryClientPro
         </div>
       )}
 
-      <DataTable columns={columns} data={initialData} />
+      <DataTable columns={columns} data={enrichedData as InventoryItem[]} />
     </div>
   );
 }

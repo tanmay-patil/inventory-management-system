@@ -16,7 +16,7 @@ export async function getInventoryItems(): Promise<InventoryItem[]> {
 export async function addInventoryItem(formData: FormData) {
   const partMasterId = formData.get('partMasterId') as string;
   const serialNumber = formData.get('serialNumber') as string | null;
-  const status = (formData.get('status') as ItemStatus) || 'IN_STOCK';
+  const status = (formData.get('status') as ItemStatus) || ItemStatus.IN_STOCK;
   const locationId = formData.get('locationId') as string | null;
 
   if (!partMasterId) {

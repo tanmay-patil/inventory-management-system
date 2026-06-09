@@ -3,7 +3,8 @@
     {
       "id": "617de085-9401-4968-9a00-024471168758",
       "name": "Test Part",
-      "partNumber": "TEST-1"
+      "partNumber": "TEST-1123",
+      "description": ""
     }
   ],
   "inventoryItems": [
