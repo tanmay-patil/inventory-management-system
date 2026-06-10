@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { JsonDatabase } from '@/core/db/JsonDatabase';
 import { PartMasterRepository } from '@/core/repositories/PartMasterRepository';
-import { PartMaster } from '@/core/entities/PartMaster';
+import { PartMaster, MachineType } from '@/core/entities/PartMaster';
 
 // Dependency injection instantiation for the Server Actions
 const db = new JsonDatabase();
@@ -17,6 +17,8 @@ export async function addPartMaster(formData: FormData) {
   const name = formData.get('name') as string;
   const partNumber = formData.get('partNumber') as string;
   const description = formData.get('description') as string | null;
+  const serialNo = formData.get('serialNo') as string | null;
+  const machineType = formData.get('machineType') as MachineType | null;
 
   if (!name || !partNumber) {
     throw new Error('Name and Part Number are required');
@@ -26,6 +28,8 @@ export async function addPartMaster(formData: FormData) {
     id: crypto.randomUUID(),
     name,
     partNumber,
+    serialNo: serialNo || undefined,
+    machineType: machineType || undefined,
     description: description || undefined,
   };
 

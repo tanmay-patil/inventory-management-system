@@ -11,4 +11,8 @@ export interface InventoryItem {
   serialNumber?: string;
   status: ItemStatus;
   locationId?: string;
+  issuedBy?: string;
+  issuedTo?: string;
+  dateAdded: string;
+  siteLocation?: string;
 }

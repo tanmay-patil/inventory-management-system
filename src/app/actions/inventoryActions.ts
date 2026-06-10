@@ -18,6 +18,10 @@ export async function addInventoryItem(formData: FormData) {
   const serialNumber = formData.get('serialNumber') as string | null;
   const status = (formData.get('status') as ItemStatus) || ItemStatus.IN_STOCK;
   const locationId = formData.get('locationId') as string | null;
+  const issuedBy = formData.get('issuedBy') as string | null;
+  const issuedTo = formData.get('issuedTo') as string | null;
+  const dateAdded = (formData.get('dateAdded') as string) || new Date().toISOString();
+  const siteLocation = formData.get('siteLocation') as string | null;
 
   if (!partMasterId) {
     throw new Error('Part Master is required');
@@ -29,6 +33,10 @@ export async function addInventoryItem(formData: FormData) {
     serialNumber: serialNumber || undefined,
     status,
     locationId: locationId || undefined,
+    issuedBy: issuedBy || undefined,
+    issuedTo: issuedTo || undefined,
+    dateAdded,
+    siteLocation: siteLocation || undefined,
   };
 
   await repo.create(newItem);

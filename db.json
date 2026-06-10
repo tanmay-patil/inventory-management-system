@@ -1,23 +1,4 @@
 {
-  "partMasters": [
-    {
-      "id": "617de085-9401-4968-9a00-024471168758",
-      "name": "Test Part",
-      "partNumber": "TEST-1123",
-      "description": ""
-    }
-  ],
-  "inventoryItems": [
-    {
-      "id": "ab316599-2c27-4df3-8a3a-0b97d0cb9882",
-      "partMasterId": "617de085-9401-4968-9a00-024471168758",
-      "serialNumber": "SN-001",
-      "status": "IN_USE"
-    },
-    {
-      "id": "e217ab1a-2fc2-4568-99bb-43ea5a9a76f5",
-      "partMasterId": "617de085-9401-4968-9a00-024471168758",
-      "status": "IN_REPAIR"
-    }
-  ]
+  "partMasters": [],
+  "inventoryItems": []
 }

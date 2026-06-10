@@ -47,6 +47,16 @@ export const columns: ColumnDef<InventoryItem>[] = [
     cell: ({ row }) => row.getValue('locationId') || 'Unassigned',
   },
   {
+    accessorKey: 'issuedTo',
+    header: 'Issued To',
+    cell: ({ row }) => row.getValue('issuedTo') || '-',
+  },
+  {
+    accessorKey: 'siteLocation',
+    header: 'Site Location',
+    cell: ({ row }) => row.getValue('siteLocation') || '-',
+  },
+  {
     id: 'actions',
     cell: ({ row }) => <ActionCell row={row} />,
   },

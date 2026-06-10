@@ -96,8 +96,29 @@ export function InventoryClient({ initialData, partMasters }: InventoryClientPro
                 </select>
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="locationId">Storage Location</Label>
+                <Label htmlFor="locationId">Current Location</Label>
                 <Input id="locationId" name="locationId" placeholder="e.g. Main Warehouse" />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="issuedBy">Issued By</Label>
+                <Input id="issuedBy" name="issuedBy" placeholder="e.g. Manager Name" />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="issuedTo">Issued To (Engineer Name)</Label>
+                <Input id="issuedTo" name="issuedTo" placeholder="e.g. John Doe" />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="siteLocation">Site Location</Label>
+                <Input id="siteLocation" name="siteLocation" placeholder="e.g. City Hospital" />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="dateAdded">Date Added</Label>
+                <Input
+                  id="dateAdded"
+                  name="dateAdded"
+                  type="date"
+                  defaultValue={new Date().toISOString().split('T')[0]}
+                />
               </div>
             </div>
             {state?.error && <p className="text-sm text-red-500">{state.error}</p>}

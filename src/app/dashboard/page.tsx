@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { getPartMasters } from '@/app/actions/partMasterActions';
 import { getInventoryItems } from '@/app/actions/inventoryActions';
 import { ItemStatus } from '@/core/entities/InventoryItem';
+import { OnboardingWizard } from './onboarding-wizard';
 
 export default async function DashboardPage() {
   const cookieStore = await cookies();
@@ -114,6 +115,8 @@ export default async function DashboardPage() {
           </Card>
         </Link>
       </div>
+
+      {totalCatalog === 0 && totalInventory === 0 && <OnboardingWizard />}
     </div>
   );
 }
