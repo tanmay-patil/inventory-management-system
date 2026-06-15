@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { JsonDatabase } from '@/core/db/JsonDatabase';
 import { InventoryRepository } from '@/core/repositories/InventoryRepository';
 import { InventoryItem, ItemStatus } from '@/core/entities/InventoryItem';
+import crypto from 'crypto';
 
 // Dependency injection instantiation for the Server Actions
 const db = new JsonDatabase();

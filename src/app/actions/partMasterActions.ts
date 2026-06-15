@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { JsonDatabase } from '@/core/db/JsonDatabase';
 import { PartMasterRepository } from '@/core/repositories/PartMasterRepository';
 import { PartMaster, MachineType } from '@/core/entities/PartMaster';
+import crypto from 'crypto';
 
 // Dependency injection instantiation for the Server Actions
 const db = new JsonDatabase();

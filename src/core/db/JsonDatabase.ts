@@ -5,7 +5,8 @@ export class JsonDatabase {
   private filePath: string;
 
   constructor(filePath: string = 'db.json') {
-    this.filePath = path.resolve(process.cwd(), filePath);
+    const isVercel = process.env.VERCEL === '1';
+    this.filePath = isVercel ? path.join('/tmp', filePath) : path.resolve(process.cwd(), filePath);
   }
 
   private async ensureFileExists(): Promise<void> {
