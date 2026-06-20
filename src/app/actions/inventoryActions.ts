@@ -41,15 +41,15 @@ export async function addInventoryItem(formData: FormData) {
   };
 
   await repo.create(newItem);
-  revalidatePath('/dashboard/inventory');
+  revalidatePath('/dashboard', 'layout');
 }
 
 export async function deleteInventoryItem(id: string) {
   await repo.delete(id);
-  revalidatePath('/dashboard/inventory');
+  revalidatePath('/dashboard', 'layout');
 }
 
 export async function updateInventoryItem(id: string, updates: Partial<InventoryItem>) {
   await repo.update(id, updates);
-  revalidatePath('/dashboard/inventory');
+  revalidatePath('/dashboard', 'layout');
 }

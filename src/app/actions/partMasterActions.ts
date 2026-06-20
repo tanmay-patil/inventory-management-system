@@ -35,15 +35,15 @@ export async function addPartMaster(formData: FormData) {
   };
 
   await repo.create(newItem);
-  revalidatePath('/dashboard/part-masters');
+  revalidatePath('/dashboard', 'layout');
 }
 
 export async function deletePartMaster(id: string) {
   await repo.delete(id);
-  revalidatePath('/dashboard/part-masters');
+  revalidatePath('/dashboard', 'layout');
 }
 
 export async function updatePartMaster(id: string, updates: Partial<PartMaster>) {
   await repo.update(id, updates);
-  revalidatePath('/dashboard/part-masters');
+  revalidatePath('/dashboard', 'layout');
 }
